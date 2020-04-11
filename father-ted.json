@@ -1,0 +1,188 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "REST API for hand-curated Father Ted Quotes",
+    "version" : "1.0.0",
+    "title" : "Father Ted API",
+    "contact" : {
+      "email" : "dave@paddez.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "api.fatherted.irish",
+  "tags" : [ {
+    "name" : "Quotes",
+    "description" : "Retrieve a random quote."
+  }, {
+    "name" : "Series",
+    "description" : "Retrieve the Father Ted available series."
+  }, {
+    "name" : "Episodes",
+    "description" : "Retrieve the Father Ted available episodes."
+  }, {
+    "name" : "Characters",
+    "description" : "Retrieve the Father Ted available characters."
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/quotes" : {
+      "get" : {
+        "tags" : [ "Quotes" ],
+        "summary" : "Retrieve Quotes",
+        "description" : "Retrieve quotes",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "series",
+          "in" : "query",
+          "description" : "Retrieve all quotes for a given series.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "episode",
+          "in" : "query",
+          "description" : "Retrieve all quotes for a given episode title.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "character",
+          "in" : "query",
+          "description" : "Retrieve all quotes for a given character.",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Quotes for a given search.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Quote"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/quotes/random" : {
+      "get" : {
+        "tags" : [ "Quotes" ],
+        "summary" : "Retrieve a Random Quote",
+        "description" : "Retrieves a single quote from the given parameters.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "series",
+          "in" : "query",
+          "description" : "Retrieve all quotes for a given series.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "episode",
+          "in" : "query",
+          "description" : "Retrieve all quotes for a given episode title.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "character",
+          "in" : "query",
+          "description" : "Retrieve all quotes for a given character.",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A random quote.",
+            "schema" : {
+              "$ref" : "#/definitions/Quote"
+            }
+          }
+        }
+      }
+    },
+    "/series" : {
+      "get" : {
+        "tags" : [ "Series" ],
+        "summary" : "List available series.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Available series.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/episodes" : {
+      "get" : {
+        "tags" : [ "Episodes" ],
+        "summary" : "List available episodes.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Available episodes.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/characters" : {
+      "get" : {
+        "tags" : [ "Characters" ],
+        "summary" : "List available characters.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Available characters.",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Quote" : {
+      "type" : "object",
+      "required" : [ "characters", "episode", "quote", "series" ],
+      "properties" : {
+        "series" : {
+          "type" : "string",
+          "example" : "Series 2"
+        },
+        "episode" : {
+          "type" : "string",
+          "example" : "Hell"
+        },
+        "characters" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "quote" : {
+          "type" : "string",
+          "example" : "Father Dougal: God Ted, he's probably very cold now that his towel has blown away!"
+        }
+      }
+    }
+  }
+}
